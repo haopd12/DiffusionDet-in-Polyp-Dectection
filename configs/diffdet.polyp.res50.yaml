@@ -1,0 +1,22 @@
+_BASE_: "Base-DiffusionDet.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/torchvision/R-50.pkl"
+  RESNETS:
+    DEPTH: 50
+    STRIDE_IN_1X1: False
+  DiffusionDet:
+    NUM_PROPOSALS: 500
+    NUM_CLASSES: 2
+DATASETS:  
+  TRAIN: ("polyp_train",)
+  TEST: ("polyp_valid","polyp_test")
+DATALOADER:
+  SAMPLER_TRAIN: "RepeatFactorTrainingSampler"
+  REPEAT_THRESHOLD: 0.001
+SOLVER:
+  STEPS: (92000, 97000)
+  MAX_ITER: 100000
+INPUT:
+  CROP:
+    ENABLED: True
+  FORMAT: "RGB"
